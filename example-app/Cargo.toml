@@ -1,0 +1,11 @@
+[package]
+name = "example-app"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+
+
+[build-dependencies]
+cargo-pkg-info-struct-builder = { path = "../cargo-pkg-info-struct-builder" }
