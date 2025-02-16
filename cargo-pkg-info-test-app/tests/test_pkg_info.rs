@@ -9,9 +9,10 @@ fn test_pkg_info() {
     let expected_minor = "2";
     let expected_patch = "3";
     let expected_pre = "beta";
-    let expected_authors = "Jeremy Harris <jeremy.harris@zenosmosis.com>";
+    let expected_authors = "Test Author 1 <test1@example.com>:Test Author 2 <test2@example.com>";
     let expected_description = "An example app to test cargo-pkg-info-struct-builder";
     let expected_license = "MIT";
+    let expected_license_content = "=== MOCK LICENSE FOR TESTING ===\n\nPermission is hereby granted to test, debug, and enhance.\n";
     let expected_repository = "https://github.com/jzombie/rust-cargo-pkg-info-struct-builder";
     let expected_homepage = "https://crates.io/crates/cargo-pkg-info-struct-builder";
     let expected_rust_version = "1.84";
@@ -87,6 +88,13 @@ fn test_pkg_info() {
         "Expected license to be '{}', but got '{}'",
         expected_license,
         CargoPkgInfo::license()
+    );
+    assert_eq!(
+        CargoPkgInfo::license_content(),
+        expected_license_content,
+        "Expected license content to be '{}', but got '{}'",
+        expected_license_content,
+        CargoPkgInfo::license_content()
     );
     assert_eq!(
         CargoPkgInfo::repository(),
