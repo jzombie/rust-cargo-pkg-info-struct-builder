@@ -1,8 +1,9 @@
 [package]
 name = "cargo-pkg-info-struct"
 authors = ["Jeremy Harris <jeremy.harris@zenosmosis.com>"]
-description = "A lightweight Rust crate that provides compile-time package metadata, including versioning, authors, license information, and build details, accessible at runtime without additional file I/O."
-version = "0.1.0"
+description = "A Rust crate that provides compile-time package metadata, including versioning, authors, license information, and build details, accessible at runtime without additional file I/O."
+repository = "https://github.com/jzombie/rust-cargo-pkg-info-struct"
+version = "0.1.0-alpha"
 edition = "2021"
 license = "MIT"
 
