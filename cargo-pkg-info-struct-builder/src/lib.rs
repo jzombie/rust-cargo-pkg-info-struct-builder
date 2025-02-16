@@ -3,14 +3,14 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
 
-pub fn inject_build_metadata() {
+pub fn inject_build_metadata(project_dest_path: PathBuf) {
     // Get the consuming package's root directory (not OUT_DIR)
     let manifest_dir = env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR not set");
-    let generated_dir: PathBuf = Path::new(&manifest_dir).join("src");
-    let dest_path = generated_dir.join("cargo_pkg_info.rs");
+    let dest_path: PathBuf = Path::new(&manifest_dir).join(project_dest_path);
+    let destination_dir = dest_path.parent().unwrap();
 
     // Ensure the generated directory exists
-    fs::create_dir_all(&generated_dir).expect("Failed to create generated directory");
+    fs::create_dir_all(&destination_dir).expect("Failed to create generated directory");
 
     let build_time_utc = SystemTime::now()
         .duration_since(UNIX_EPOCH)
