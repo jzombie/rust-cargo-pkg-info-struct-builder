@@ -12,6 +12,7 @@ This approach:
 - Captures project-wide metadata instead of dependency metadata.
 - Avoids runtime file I/O since everything is embedded at compile time.
 - Works with any Rust project without requiring dynamic runtime access to Cargo environment variables.
+- Doesn't require additional runtime dependencies (only compile time).
 - Doesn't require repeatedly committing the auto-generated source file to version control, as it remains identical across builds and only changes if the template itself is modified, regardless of metadata updates.
 
 ## Overview
