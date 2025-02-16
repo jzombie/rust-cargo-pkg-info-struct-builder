@@ -27,3 +27,36 @@ fn test_inject_build_metadata() {
     // Validate the file's Rust syntax in-memory (NO FILE CREATION)
     syn::parse_file(&contents).expect("Generated Rust file is invalid!");
 }
+
+#[test]
+fn test_inject_build_metadata_no_mtime_change() {
+    // On some filesystems or OSes, modification time resolution can be coarse.
+    // We'll do a short sleep to ensure we can detect changes (if any).
+    use std::{thread, time::Duration};
+
+    let temp_dir = tempfile::tempdir().unwrap();
+    let dest_path = temp_dir.path().join("cargo_pkg_info.rs");
+
+    // First injection
+    inject_build_metadata(dest_path.to_path_buf());
+    let first_metadata = fs::metadata(&dest_path).unwrap();
+    let first_modified = first_metadata.modified().unwrap();
+
+    // Sleep to ensure we can detect a modification time change
+    thread::sleep(Duration::from_secs(1));
+
+    // Second injection (no changes expected)
+    inject_build_metadata(dest_path.to_path_buf());
+    let second_metadata = fs::metadata(&dest_path).unwrap();
+    let second_modified = second_metadata.modified().unwrap();
+
+    // Check that the mod time hasn't changed
+    assert_eq!(
+        first_modified, second_modified,
+        "File modification time changed despite no new metadata!"
+    );
+
+    // Validate syntax again
+    let contents = fs::read_to_string(&dest_path).unwrap();
+    syn::parse_file(&contents).expect("Generated Rust file is invalid on second parse!");
+}
