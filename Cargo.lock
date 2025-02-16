@@ -4,7 +4,7 @@ version = 4
 
 [[package]]
 name = "cargo-pkg-info-struct-builder"
-version = "0.1.0-alpha"
+version = "0.1.0-alpha1"
 
 [[package]]
 name = "example-app"
