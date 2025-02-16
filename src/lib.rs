@@ -3,6 +3,9 @@ use std::sync::Arc;
 
 const NO_ENV_FALLBACK: &str = "N/A";
 
+/// Reference: <https://doc.rust-lang.org/cargo/reference/environment-variables.html>
+/// This struct provides access to package metadata set by Cargo at compile time,
+/// including versioning, authors, license information, and build details.
 pub struct CargoPkgInfo {
     app_name: Arc<str>,
     crate_name: Arc<str>,
@@ -88,76 +91,206 @@ impl CargoPkgInfo {
         }
     }
 
-    /// Read-only getters
+    /// Returns the application name.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.app_name().is_empty());
+    /// ```
     pub fn app_name(&self) -> &str {
         &self.app_name
     }
 
+    /// Returns the crate name.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.crate_name().is_empty());
+    /// ```
     pub fn crate_name(&self) -> &str {
         &self.crate_name
     }
 
     /// Returns the full application version.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.app_version().is_empty());
+    /// ```
     pub fn app_version(&self) -> &str {
         &self.app_version
     }
 
     /// Returns the major version of the application.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.version_major().is_empty());
+    /// ```
     pub fn version_major(&self) -> &str {
         &self.version_major
     }
 
     /// Returns the minor version of the application.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.version_minor().is_empty());
+    /// ```
     pub fn version_minor(&self) -> &str {
         &self.version_minor
     }
 
     /// Returns the patch version of the application.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.version_patch().is_empty());
+    /// ```
     pub fn version_patch(&self) -> &str {
         &self.version_patch
     }
 
     /// Returns the pre-release version of the application.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(info.version_pre().len() >= 0);
+    /// ```
     pub fn version_pre(&self) -> &str {
         &self.version_pre
     }
 
+    /// Returns the authors of the package.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.authors().is_empty());
+    /// ```
     pub fn authors(&self) -> &str {
         &self.authors
     }
 
+    /// Returns the description of the package.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.description().is_empty());
+    /// ```
     pub fn description(&self) -> &str {
         &self.description
     }
 
+    /// Returns the homepage URL of the package.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.homepage().is_empty());
+    /// ```
     pub fn homepage(&self) -> &str {
         &self.homepage
     }
 
+    /// Returns the repository URL of the package.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.repository().is_empty());
+    /// ```
     pub fn repository(&self) -> &str {
         &self.repository
     }
 
+    /// Returns the license type of the package.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.license().is_empty());
+    /// ```
     pub fn license(&self) -> &str {
         &self.license
     }
 
+    /// Returns the contents of the license file (embedded at build time).
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(info.license_content().len() > 0);
+    /// ```
     pub fn license_content(&self) -> &str {
         &self.license_content
     }
 
+    /// Returns the Rust version required by the package.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.rust_version().is_empty());
+    /// ```
     pub fn rust_version(&self) -> &str {
         &self.rust_version
     }
 
+    /// Returns the path to the README file.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.readme_path().is_empty());
+    /// ```
     pub fn readme_path(&self) -> &str {
         &self.readme_path
     }
 
+    /// Returns the build target (architecture/platform).
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.build_target().is_empty());
+    /// ```
     pub fn build_target(&self) -> &str {
         &self.build_target
     }
 
+    /// Returns the local build time.
+    ///
+    /// # Example
+    /// ```
+    /// use cargo_pkg_info_struct::CargoPkgInfo;
+    /// let info = CargoPkgInfo::new();
+    /// assert!(!info.build_time_local().is_empty());
+    /// ```
     pub fn build_time_local(&self) -> &str {
         &self.build_time_local
     }
