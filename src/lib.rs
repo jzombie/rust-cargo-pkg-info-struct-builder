@@ -23,20 +23,16 @@ pub struct CargoPkgInfo {
     rust_version: Arc<str>,
     readme_path: Arc<str>,
     build_target: Arc<str>,
-    build_time_local: Arc<str>,
+    build_time_local: Option<Arc<DateTime<Local>>>,
 }
 
 impl CargoPkgInfo {
     /// Creates a new `CargoPkgInfo` instance with values set from environment variables.
     pub fn new() -> Self {
-        let build_timestamp_str = option_env!("BUILD_TIME").unwrap_or(NO_ENV_FALLBACK);
-
-        let parsed_build_utc = build_timestamp_str
-            .parse::<DateTime<Utc>>()
-            .ok()
+        let parsed_build_utc = option_env!("BUILD_TIME")
+            .and_then(|s| s.parse::<DateTime<Utc>>().ok())
             .map(|dt| dt.with_timezone(&Local))
-            .map(|dt| dt.format("%b %d, %Y %H:%M:%S %Z").to_string())
-            .unwrap_or_else(|| NO_ENV_FALLBACK.to_string());
+            .map(Arc::new);
 
         Self {
             app_name: option_env!("CARGO_PKG_NAME")
@@ -283,15 +279,21 @@ impl CargoPkgInfo {
         &self.build_target
     }
 
-    /// Returns the local build time.
+    /// Returns the local build time in a specified format or `"N/A"` if unavailable.
+    ///
+    /// # Arguments
+    /// * `format` - A format string following `chrono::format` syntax.
     ///
     /// # Example
     /// ```
     /// use cargo_pkg_info_struct::CargoPkgInfo;
     /// let info = CargoPkgInfo::new();
-    /// assert!(!info.build_time_local().is_empty());
+    /// assert!(info.build_time_local("%Y-%m-%d %H:%M:%S").len() > 0);
     /// ```
-    pub fn build_time_local(&self) -> &str {
-        &self.build_time_local
+    pub fn build_time_local(&self, format: &str) -> String {
+        match &self.build_time_local {
+            Some(time) => time.format(format).to_string(),
+            None => NO_ENV_FALLBACK.to_string(), // Return "N/A" if build time isn't set
+        }
     }
 }
