@@ -16,7 +16,7 @@ const NO_ENV_FALLBACK: &str = "N/A";
 pub struct CargoPkgInfo {}
 
 impl CargoPkgInfo {
-    /// Returns the application name.
+    /// Returns the package name.
     #[allow(dead_code)]
     pub fn pkg_name() -> &'static str {
         option_env!("CARGO_PKG_NAME")
