@@ -32,15 +32,15 @@ impl CargoPkgInfo {
             .into()
     }
 
-    /// Returns the full application version.
+    /// Returns the full package version.
     #[allow(dead_code)]
-    pub fn app_version() -> &'static str {
+    pub fn pkg_version() -> &'static str {
         option_env!("CARGO_PKG_VERSION")
             .unwrap_or(NO_ENV_FALLBACK)
             .into()
     }
 
-    /// Returns the major version of the application.
+    /// Returns the major version of the package.
     #[allow(dead_code)]
     pub fn version_major() -> &'static str {
         option_env!("CARGO_PKG_VERSION_MAJOR")
@@ -48,7 +48,7 @@ impl CargoPkgInfo {
             .into()
     }
 
-    /// Returns the minor version of the application.
+    /// Returns the minor version of the package.
     #[allow(dead_code)]
     pub fn version_minor() -> &'static str {
         option_env!("CARGO_PKG_VERSION_MINOR")
@@ -56,7 +56,7 @@ impl CargoPkgInfo {
             .into()
     }
 
-    /// Returns the patch version of the application.
+    /// Returns the patch version of the package.
     #[allow(dead_code)]
     pub fn version_patch() -> &'static str {
         option_env!("CARGO_PKG_VERSION_PATCH")
@@ -64,7 +64,7 @@ impl CargoPkgInfo {
             .into()
     }
 
-    /// Returns the pre-release version of the application.
+    /// Returns the pre-release version of the package.
     #[allow(dead_code)]
     pub fn version_pre() -> &'static str {
         option_env!("CARGO_PKG_VERSION_PRE")
