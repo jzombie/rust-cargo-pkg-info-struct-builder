@@ -28,11 +28,11 @@ fn test_pkg_info() {
 
     // Check versioning
     assert_eq!(
-        CargoPkgInfo::app_version(),
+        CargoPkgInfo::pkg_version(),
         expected_version,
         "Expected version to be '{}', but got '{}'",
         expected_version,
-        CargoPkgInfo::app_version()
+        CargoPkgInfo::pkg_version()
     );
 
     assert_eq!(

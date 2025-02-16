@@ -6,7 +6,7 @@ fn main() {
         "{:?} {:?} {:?} {:?} {:?}",
         CargoPkgInfo::pkg_name(),
         CargoPkgInfo::crate_name(),
-        CargoPkgInfo::app_version(),
+        CargoPkgInfo::pkg_version(),
         CargoPkgInfo::build_target(),
         CargoPkgInfo::build_time_utc(),
     );
