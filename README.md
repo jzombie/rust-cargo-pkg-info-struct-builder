@@ -2,6 +2,18 @@
 
 A Rust crate that **operates as a build dependency** which generates a source-code struct to provide access to compile-time package metadata, including versioning, authors, license information, and build details. This metadata is obtained from Cargo environment variables set during the build process and can be accessed at runtime without additional file I/O.
 
+## Why This is Injected at Compile Time
+Unlike a typical crate that provides runtime metadata access, `cargo-pkg-info-struct-builder` injects metadata at compile time to ensure that it captures details about the entire project, not just the dependency itself.
+
+If this crate were used as a standard Rust dependency, it would only retrieve the metadata of itself (i.e., `cargo-pkg-info-struct-builder`), not the actual project it is being used in. By injecting the metadata into your project’s source code at build time, it ensures that the correct package details—such as the main crate’s version, authors, and repository—are included in the final binary.
+
+This approach:
+
+- Captures project-wide metadata instead of dependency metadata.
+- Avoids runtime file I/O since everything is embedded at compile time.
+- Works with any Rust project without requiring dynamic runtime access to Cargo environment variables.
+- Doesn't require repeatedly committing the auto-generated source file to version control, as it remains identical across builds and only changes if the template itself is modified, regardless of metadata updates.
+
 ## Overview
 
 `cargo-pkg-info-struct-builder` provides structured access to package metadata set by Cargo at **compile time**, including:  
