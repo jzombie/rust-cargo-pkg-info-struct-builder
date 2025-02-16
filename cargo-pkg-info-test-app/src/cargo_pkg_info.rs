@@ -15,6 +15,12 @@ const NO_ENV_FALLBACK: &str = "N/A";
 
 pub struct CargoPkgInfo {}
 
+macro_rules! unescape_newlines {
+    ($s:expr) => {
+        Box::leak($s.replace("\\n", "\n").into_boxed_str())
+    };
+}
+
 impl CargoPkgInfo {
     /// Returns the package name.
     #[allow(dead_code)]
@@ -115,9 +121,8 @@ impl CargoPkgInfo {
     /// Returns the contents of the license file (embedded at build time).
     #[allow(dead_code)]
     pub fn license_content() -> &'static str {
-        option_env!("LICENSE_CONTENT")
-            .unwrap_or(NO_ENV_FALLBACK)
-            .into()
+        let license = option_env!("LICENSE_CONTENT").unwrap_or(NO_ENV_FALLBACK);
+        unescape_newlines!(license)
     }
 
     /// Returns the Rust version required by the package.

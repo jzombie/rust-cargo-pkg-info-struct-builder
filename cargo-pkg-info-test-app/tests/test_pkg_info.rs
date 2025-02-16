@@ -12,7 +12,7 @@ fn test_pkg_info() {
     let expected_authors = "Test Author 1 <test1@example.com>:Test Author 2 <test2@example.com>";
     let expected_description = "An example app to test cargo-pkg-info-struct-builder";
     let expected_license = "MIT";
-    let expected_license_content = "Permission is hereby granted to test.";
+    let expected_license_content = "=== MOCK LICENSE FOR TESTING ===\n\nPermission is hereby granted to test, debug, and enhance.\n";
     let expected_repository = "https://github.com/jzombie/rust-cargo-pkg-info-struct-builder";
     let expected_homepage = "https://crates.io/crates/cargo-pkg-info-struct-builder";
     let expected_rust_version = "1.84";

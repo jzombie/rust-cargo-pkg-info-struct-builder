@@ -57,7 +57,8 @@ pub fn inject_build_metadata(project_dest_path: PathBuf) {
     if let Some(license_path) = get_license_file_path(&manifest_dir) {
         if let Ok(license_content) = fs::read_to_string(&license_path) {
             // Set the license content as an environment variable
-            println!("cargo:rustc-env=LICENSE_CONTENT={}", license_content);
+            let escaped_license = license_content.replace("\n", "\\n");
+            println!("cargo:rustc-env=LICENSE_CONTENT={}", escaped_license);
         }
     }
 
