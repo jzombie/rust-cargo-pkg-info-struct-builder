@@ -1,6 +1,6 @@
 [package]
 name = "cargo-pkg-info-struct-builder"
-version = "0.1.0-alpha1"
+version = "0.1.0-alpha2"
 authors = ["Jeremy Harris <jeremy.harris@zenosmosis.com>"]
 edition = "2021"
 description = "A Rust crate used as a build dependency which provides structured access to Cargo Package Info."
