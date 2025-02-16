@@ -6,6 +6,5 @@ publish = false
 
 [dependencies]
 
-
 [build-dependencies]
 cargo-pkg-info-struct-builder = { path = "../cargo-pkg-info-struct-builder" }
