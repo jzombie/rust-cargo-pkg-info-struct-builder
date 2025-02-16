@@ -1,6 +1,22 @@
 
 # cargo-pkg-info-struct-builder
 
+| OS            | Status                                                                               |
+|---------------|--------------------------------------------------------------------------------------|
+| Ubuntu-latest | [![Ubuntu Tests][ubuntu-latest-badge]][ubuntu-latest-workflow]                       |
+| macOS-latest  | [![macOS Tests][macos-latest-badge]][macos-latest-workflow]                          |
+| Windows-latest| [![Windows Tests][windows-latest-badge]][windows-latest-workflow]                    |
+
+[ubuntu-latest-badge]: https://github.com/jzombie/rust-cargo-pkg-info-struct-builder/actions/workflows/rust-tests.yml/badge.svg?branch=main&job=Run%20Rust%20Tests%20(OS%20=%20ubuntu-latest)
+[ubuntu-latest-workflow]: https://github.com/jzombie/rust-cargo-pkg-info-struct-builder/actions/workflows/rust-tests.yml?query=branch%3Amain
+
+[macos-latest-badge]: https://github.com/jzombie/rust-cargo-pkg-info-struct-builder/actions/workflows/rust-tests.yml/badge.svg?branch=main&job=Run%20Rust%20Tests%20(OS%20=%20macos-latest)
+[macos-latest-workflow]: https://github.com/jzombie/rust-cargo-pkg-info-struct-builder/actions/workflows/rust-tests.yml?query=branch%3Amain
+
+[windows-latest-badge]: https://github.com/jzombie/rust-cargo-pkg-info-struct-builder/actions/workflows/rust-tests.yml/badge.svg?branch=main&job=Run%20Rust%20Tests%20(OS%20=%20windows-latest)
+[windows-latest-workflow]: https://github.com/jzombie/rust-cargo-pkg-info-struct-builder/actions/workflows/rust-tests.yml?query=branch%3Amain
+
+
 A build-time crate that generates a struct (`CargoPkgInfo`) to provide easy, structured access to your Rust project’s compile-time Cargo environment variables.
 
 ## Available Metadata Methods
