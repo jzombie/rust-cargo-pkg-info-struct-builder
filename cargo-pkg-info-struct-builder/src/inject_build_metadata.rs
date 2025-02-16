@@ -4,6 +4,13 @@ use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
 use toml::Value;
 
+/// Escapes newlines (`\n`) as `\\n` in a string.
+macro_rules! escape_newlines {
+    ($s:expr) => {
+        $s.replace("\n", "\\n")
+    };
+}
+
 /// Injects build metadata, including license content if available.
 ///
 /// This function gathers metadata such as:
@@ -56,9 +63,11 @@ pub fn inject_build_metadata(project_dest_path: PathBuf) {
     // Read and set the license content if available
     if let Some(license_path) = get_license_file_path(&manifest_dir) {
         if let Ok(license_content) = fs::read_to_string(&license_path) {
-            // Set the license content as an environment variable
-            let escaped_license = license_content.replace("\n", "\\n");
-            println!("cargo:rustc-env=LICENSE_CONTENT={}", escaped_license);
+            // Set license content as an environment variable
+            println!(
+                "cargo:rustc-env=LICENSE_CONTENT={}",
+                escape_newlines!(license_content)
+            );
         }
     }
 
