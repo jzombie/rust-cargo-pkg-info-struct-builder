@@ -1,6 +1,6 @@
 [workspace]
 members = [
     "cargo-pkg-info-struct-builder",
-    "example-app"
+    "cargo-pkg-info-test-app"
 ]
 resolver = "2"

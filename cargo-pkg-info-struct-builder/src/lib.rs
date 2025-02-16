@@ -37,7 +37,7 @@ pub fn inject_build_metadata(project_dest_path: PathBuf) {
     fs::create_dir_all(&destination_dir).expect("Failed to create generated directory");
 
     // Note: `CARGO_BUILD_TARGET` does not work reliably for this
-    let build_target = env::var("TARGET").unwrap();
+    let build_target = env::var("TARGET").unwrap_or_else(|_| "unknown-target".to_string());
     println!("cargo:rustc-env=BUILD_TARGET={}", build_target);
 
     // Custom

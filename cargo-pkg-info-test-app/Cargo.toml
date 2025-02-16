@@ -1,0 +1,17 @@
+[package]
+name = "cargo-pkg-info-test-app"
+version = "1.2.3-beta"
+authors = ["Jeremy Harris <jeremy.harris@zenosmosis.com>"]
+description = "An example app to test cargo-pkg-info-struct-builder"
+repository = "https://github.com/jzombie/rust-cargo-pkg-info-struct-builder"
+homepage = "https://crates.io/crates/cargo-pkg-info-struct-builder"
+license = "MIT"
+edition = "2021"
+rust-version = "1.84"
+readme = "README.md"
+publish = false
+
+[dependencies]
+
+[build-dependencies]
+cargo-pkg-info-struct-builder = { path = "../cargo-pkg-info-struct-builder" }
