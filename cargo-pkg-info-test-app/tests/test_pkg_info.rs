@@ -9,7 +9,7 @@ fn test_pkg_info() {
     let expected_minor = "2";
     let expected_patch = "3";
     let expected_pre = "beta";
-    let expected_authors = "Jeremy Harris <jeremy.harris@zenosmosis.com>";
+    let expected_authors = "Test Author 1 <test1@example.com>:Test Author 2 <test2@example.com>";
     let expected_description = "An example app to test cargo-pkg-info-struct-builder";
     let expected_license = "MIT";
     let expected_repository = "https://github.com/jzombie/rust-cargo-pkg-info-struct-builder";
