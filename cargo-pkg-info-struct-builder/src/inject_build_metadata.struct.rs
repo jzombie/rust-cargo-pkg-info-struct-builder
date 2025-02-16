@@ -115,7 +115,7 @@ impl CargoPkgInfo {
     /// Returns the contents of the license file (embedded at build time).
     #[allow(dead_code)]
     pub fn license_content() -> &'static str {
-        option_env!("CARGO_PKG_LICENSE_CONTENT")
+        option_env!("LICENSE_CONTENT")
             .unwrap_or(NO_ENV_FALLBACK)
             .into()
     }
