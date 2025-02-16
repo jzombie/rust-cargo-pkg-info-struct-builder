@@ -8,6 +8,7 @@ repository = "https://github.com/jzombie/rust-cargo-pkg-info-struct-builder"
 license = "MIT"
 
 [dependencies]
+toml = "0.8.20"
 
 [dev-dependencies]
 syn = { version = "2.0.98", features = ["full"] }

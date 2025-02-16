@@ -2,6 +2,7 @@ use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
+use toml::Value;
 
 /// Injects build metadata, including license content if available.
 ///
@@ -74,6 +75,34 @@ pub fn inject_build_metadata(project_dest_path: PathBuf) {
     }
 }
 
+/// Reads `Cargo.toml`, parses it, and extracts the value of a specified field.
+///
+/// This function reads the `[package]` section of `Cargo.toml` and returns the value
+/// of the requested key if it exists.
+///
+/// # Arguments
+///
+/// * `manifest_dir` - The path to the consuming package's root directory.
+/// * `field` - The key in `Cargo.toml` to retrieve (e.g., `"license-file"`, `"version"`, etc.).
+///
+/// # Returns
+///
+/// * `Some(String)` - The extracted value if found.
+/// * `None` - If the key does not exist.
+pub fn get_cargo_field(manifest_dir: &Path, field: &str) -> Option<String> {
+    let cargo_toml_path = manifest_dir.join("Cargo.toml");
+    let cargo_toml_content = fs::read_to_string(&cargo_toml_path).ok()?;
+    let cargo_toml: Value = toml::from_str(&cargo_toml_content).ok()?;
+
+    cargo_toml
+        .get("package")?
+        .get(field)?
+        .as_str()
+        .map(|s| s.to_string())
+}
+
+/// Retrieves the absolute path of the `license-file` from `Cargo.toml`, if available.
+
 /// Reads `Cargo.toml`, extracts the `license-file` path, and returns it.
 ///
 /// This function looks for the `license-file` key in `Cargo.toml` and extracts
@@ -100,18 +129,6 @@ pub fn inject_build_metadata(project_dest_path: PathBuf) {
 /// - This function does **not** verify whether the license file exists.
 /// - It does **not** parse TOML properly; it just scans lines for the `license-file` key.
 /// - If `Cargo.toml` uses unconventional formatting, it might not be detected.
-fn get_license_file_path(manifest_dir: &Path) -> Option<PathBuf> {
-    let cargo_toml_path = manifest_dir.join("Cargo.toml");
-    let cargo_toml_content = fs::read_to_string(&cargo_toml_path).ok()?;
-
-    // Look for the `license-file` key in Cargo.toml
-    for line in cargo_toml_content.lines() {
-        if let Some((_, value)) = line.split_once("license-file") {
-            let value = value.trim().trim_start_matches('=').trim();
-            let value = value.trim_matches(|c| c == '"' || c == '\''); // Remove quotes
-            return Some(manifest_dir.join(value));
-        }
-    }
-
-    None // No license file found
+pub fn get_license_file_path(manifest_dir: &Path) -> Option<PathBuf> {
+    get_cargo_field(manifest_dir, "license-file").map(|rel_path| manifest_dir.join(rel_path))
 }
