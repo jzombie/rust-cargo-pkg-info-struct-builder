@@ -4,10 +4,11 @@ use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
 use toml::Value;
 
-/// Escapes newlines (`\n`) as `\\n` in a string.
+/// Escapes all newline sequences, normalizing `\r\n` to `\n`,
+/// then replacing `\n` with `\\n`.
 macro_rules! escape_newlines {
     ($s:expr) => {
-        $s.replace("\n", "\\n")
+        $s.replace("\r\n", "\n").replace('\n', "\\n")
     };
 }
 
