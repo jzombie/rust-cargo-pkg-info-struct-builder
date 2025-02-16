@@ -22,25 +22,25 @@ A build-time crate that generates a struct (`CargoPkgInfo`) to provide easy, str
 
 Once generated, the `CargoPkgInfo` struct provides access to the following metadata:
 
-| **Method**                           | **Description**                                      |
-|--------------------------------------|------------------------------------------------------|
-| `CargoPkgInfo::pkg_name()`           | Package name (`CARGO_PKG_NAME`)                      |
-| `CargoPkgInfo::crate_name()`         | Crate name (`CARGO_CRATE_NAME`)                      |
-| `CargoPkgInfo::pkg_version()`        | Full version (`CARGO_PKG_VERSION`)                   | 
-| `CargoPkgInfo::version_major()`      | Major version (`CARGO_PKG_VERSION_MAJOR`)            |
-| `CargoPkgInfo::version_minor()`      | Minor version (`CARGO_PKG_VERSION_MINOR`)            |
-| `CargoPkgInfo::version_patch()`      | Patch version (`CARGO_PKG_VERSION_PATCH`)            |
-| `CargoPkgInfo::version_pre()`        | Pre-release version (`CARGO_PKG_VERSION_PRE`)        |
-| `CargoPkgInfo::authors()`            | Authors (`CARGO_PKG_AUTHORS`)                        |
-| `CargoPkgInfo::description()`        | Description (`CARGO_PKG_DESCRIPTION`)                |
-| `CargoPkgInfo::homepage()`           | Homepage URL (`CARGO_PKG_HOMEPAGE`)                  |
-| `CargoPkgInfo::repository()`         | Repository URL (`CARGO_PKG_REPOSITORY`)              |
-| `CargoPkgInfo::license()`            | License name (`CARGO_PKG_LICENSE`)                   |
-| `CargoPkgInfo::license_content()`    | Full license text (`CARGO_PKG_LICENSE_FILE`)         |
-| `CargoPkgInfo::rust_version()`       | Required Rust version (`CARGO_PKG_RUST_VERSION`)     |
-| `CargoPkgInfo::readme_path()`        | Path to README file (`CARGO_PKG_README`)             |
-| `CargoPkgInfo::build_target()`       | Compilation target (`BUILD_TARGET`)                  |
-| `CargoPkgInfo::build_time_utc()`     | Build timestamp UTC (`BUILD_TIME_UTC`)               |
+| **Method**                           | **Description**                                          |
+|--------------------------------------|----------------------------------------------------------|
+| `CargoPkgInfo::pkg_name()`           | Package name (`CARGO_PKG_NAME`)                          |
+| `CargoPkgInfo::crate_name()`         | Crate name (`CARGO_CRATE_NAME`)                          |
+| `CargoPkgInfo::pkg_version()`        | Full version (`CARGO_PKG_VERSION`)                       | 
+| `CargoPkgInfo::version_major()`      | Major version (`CARGO_PKG_VERSION_MAJOR`)                |
+| `CargoPkgInfo::version_minor()`      | Minor version (`CARGO_PKG_VERSION_MINOR`)                |
+| `CargoPkgInfo::version_patch()`      | Patch version (`CARGO_PKG_VERSION_PATCH`)                |
+| `CargoPkgInfo::version_pre()`        | Pre-release version (`CARGO_PKG_VERSION_PRE`)            |
+| `CargoPkgInfo::authors()`            | Authors (`CARGO_PKG_AUTHORS`)                            |
+| `CargoPkgInfo::description()`        | Description (`CARGO_PKG_DESCRIPTION`)                    |
+| `CargoPkgInfo::homepage()`           | Homepage URL (`CARGO_PKG_HOMEPAGE`)                      |
+| `CargoPkgInfo::repository()`         | Repository URL (`CARGO_PKG_REPOSITORY`)                  |
+| `CargoPkgInfo::license()`            | License name (`CARGO_PKG_LICENSE`)                       |
+| `CargoPkgInfo::license_content()`    | Full license text (contents of `CARGO_PKG_LICENSE_FILE`) |
+| `CargoPkgInfo::rust_version()`       | Required Rust version (`CARGO_PKG_RUST_VERSION`)         |
+| `CargoPkgInfo::readme_path()`        | Path to README file (`CARGO_PKG_README`)                 |
+| `CargoPkgInfo::build_target()`       | Compilation target (`BUILD_TARGET`)                      |
+| `CargoPkgInfo::build_time_utc()`     | Build timestamp UTC (`BUILD_TIME_UTC`)                   |
 
 ---
 
