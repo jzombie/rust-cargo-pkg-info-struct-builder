@@ -1,6 +1,7 @@
 use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
+use std::time::{SystemTime, UNIX_EPOCH};
 
 pub fn inject_build_metadata() {
     // Get the consuming package's root directory (not OUT_DIR)
@@ -10,6 +11,13 @@ pub fn inject_build_metadata() {
 
     // Ensure the generated directory exists
     fs::create_dir_all(&generated_dir).expect("Failed to create generated directory");
+
+    let build_time_utc = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .expect("Time went backwards")
+        .as_secs()
+        .to_string();
+    println!("cargo:rustc-env=BUILD_TIME_UTC={}", build_time_utc);
 
     // FIXME: For some reason `CARGO_BUILD_TARGET` is not working, but this does
     let build_target = env::var("TARGET").unwrap();
