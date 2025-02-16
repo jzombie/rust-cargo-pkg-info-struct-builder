@@ -1,4 +1,3 @@
-use chrono::{DateTime, Local, Utc};
 use std::sync::Arc;
 
 const NO_ENV_FALLBACK: &str = "N/A";
@@ -23,17 +22,11 @@ pub struct CargoPkgInfo {
     rust_version: Arc<str>,
     readme_path: Arc<str>,
     build_target: Arc<str>,
-    build_time_local: Option<Arc<DateTime<Local>>>,
 }
 
 impl CargoPkgInfo {
     /// Creates a new `CargoPkgInfo` instance with values set from environment variables.
     pub fn new() -> Self {
-        let parsed_build_utc = option_env!("BUILD_TIME")
-            .and_then(|s| s.parse::<DateTime<Utc>>().ok())
-            .map(|dt| dt.with_timezone(&Local))
-            .map(Arc::new);
-
         Self {
             app_name: option_env!("CARGO_PKG_NAME")
                 .unwrap_or(NO_ENV_FALLBACK)
@@ -83,7 +76,6 @@ impl CargoPkgInfo {
             build_target: option_env!("BUILD_TARGET")
                 .unwrap_or(NO_ENV_FALLBACK)
                 .into(),
-            build_time_local: parsed_build_utc.into(),
         }
     }
 
@@ -95,6 +87,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(!info.app_name().is_empty());
     /// ```
+    #[allow(dead_code)]
     pub fn app_name(&self) -> &str {
         &self.app_name
     }
@@ -107,6 +100,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(!info.crate_name().is_empty());
     /// ```
+    #[allow(dead_code)]
     pub fn crate_name(&self) -> &str {
         &self.crate_name
     }
@@ -119,6 +113,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(!info.app_version().is_empty());
     /// ```
+    #[allow(dead_code)]
     pub fn app_version(&self) -> &str {
         &self.app_version
     }
@@ -131,6 +126,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(!info.version_major().is_empty());
     /// ```
+    #[allow(dead_code)]
     pub fn version_major(&self) -> &str {
         &self.version_major
     }
@@ -143,6 +139,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(!info.version_minor().is_empty());
     /// ```
+    #[allow(dead_code)]
     pub fn version_minor(&self) -> &str {
         &self.version_minor
     }
@@ -155,6 +152,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(!info.version_patch().is_empty());
     /// ```
+    #[allow(dead_code)]
     pub fn version_patch(&self) -> &str {
         &self.version_patch
     }
@@ -167,6 +165,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(info.version_pre().len() >= 0);
     /// ```
+    #[allow(dead_code)]
     pub fn version_pre(&self) -> &str {
         &self.version_pre
     }
@@ -179,6 +178,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(!info.authors().is_empty());
     /// ```
+    #[allow(dead_code)]
     pub fn authors(&self) -> &str {
         &self.authors
     }
@@ -191,6 +191,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(!info.description().is_empty());
     /// ```
+    #[allow(dead_code)]
     pub fn description(&self) -> &str {
         &self.description
     }
@@ -203,6 +204,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(!info.homepage().is_empty());
     /// ```
+    #[allow(dead_code)]
     pub fn homepage(&self) -> &str {
         &self.homepage
     }
@@ -215,6 +217,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(!info.repository().is_empty());
     /// ```
+    #[allow(dead_code)]
     pub fn repository(&self) -> &str {
         &self.repository
     }
@@ -227,6 +230,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(!info.license().is_empty());
     /// ```
+    #[allow(dead_code)]
     pub fn license(&self) -> &str {
         &self.license
     }
@@ -239,6 +243,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(info.license_content().len() > 0);
     /// ```
+    #[allow(dead_code)]
     pub fn license_content(&self) -> &str {
         &self.license_content
     }
@@ -251,6 +256,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(!info.rust_version().is_empty());
     /// ```
+    #[allow(dead_code)]
     pub fn rust_version(&self) -> &str {
         &self.rust_version
     }
@@ -263,6 +269,7 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(!info.readme_path().is_empty());
     /// ```
+    #[allow(dead_code)]
     pub fn readme_path(&self) -> &str {
         &self.readme_path
     }
@@ -275,25 +282,8 @@ impl CargoPkgInfo {
     /// let info = CargoPkgInfo::new();
     /// assert!(!info.build_target().is_empty());
     /// ```
+    #[allow(dead_code)]
     pub fn build_target(&self) -> &str {
         &self.build_target
-    }
-
-    /// Returns the local build time in a specified format or `"N/A"` if unavailable.
-    ///
-    /// # Arguments
-    /// * `format` - A format string following `chrono::format` syntax.
-    ///
-    /// # Example
-    /// ```
-    /// use cargo_pkg_info_struct::CargoPkgInfo;
-    /// let info = CargoPkgInfo::new();
-    /// assert!(info.build_time_local("%Y-%m-%d %H:%M:%S").len() > 0);
-    /// ```
-    pub fn build_time_local(&self, format: &str) -> String {
-        match &self.build_time_local {
-            Some(time) => time.format(format).to_string(),
-            None => NO_ENV_FALLBACK.to_string(), // Return "N/A" if build time isn't set
-        }
     }
 }
