@@ -10,4 +10,5 @@ license = "MIT"
 [dependencies]
 
 [dev-dependencies]
+syn = { version = "2.0.98", features = ["full"] }
 tempfile = "3.16.0"
