@@ -40,8 +40,10 @@ macro_rules! escape_newlines {
 /// - The file cannot be written.
 /// - The parent directory of the file cannot be determined.
 pub fn inject_build_metadata(project_dest_path: PathBuf) {
+    // Retrieve the manifest directory
     let manifest_dir =
         PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR not set"));
+
     let dest_path = manifest_dir.join(&project_dest_path);
     let destination_dir = dest_path.parent().unwrap();
 
@@ -74,8 +76,23 @@ pub fn inject_build_metadata(project_dest_path: PathBuf) {
     // Embed inject.rs as bytes at compile time
     const CONTENTS: &[u8] = include_bytes!("inject_build_metadata.struct.rs");
 
-    // Write the embedded bytes to cargo_pkg_info.rs
-    fs::write(&dest_path, CONTENTS).expect("Failed to write metadata file");
+    // Check if the file already exists with the same content
+    if let Ok(existing_contents) = fs::read(&dest_path) {
+        if existing_contents == CONTENTS {
+            // If the contents are identical, skip rewriting
+            println!(
+                "No changes to {}; skipping file write.",
+                dest_path.display()
+            );
+            // We do still print rerun-if-changed triggers, so keep going
+        } else {
+            // Write the embedded bytes to cargo_pkg_info.rs
+            fs::write(&dest_path, CONTENTS).expect("Failed to write metadata file");
+        }
+    } else {
+        // If we couldn't read it (likely doesn't exist), just create it
+        fs::write(&dest_path, CONTENTS).expect("Failed to write metadata file");
+    }
 
     // Ensure Cargo rebuilds if Cargo.toml or the license file changes
     println!("cargo:rerun-if-changed=Cargo.toml");
