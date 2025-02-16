@@ -32,7 +32,7 @@ impl CargoPkgInfo {
             .into()
     }
 
-    /// Returns the full package version.
+    /// Returns the package version.
     #[allow(dead_code)]
     pub fn pkg_version() -> &'static str {
         option_env!("CARGO_PKG_VERSION")
@@ -56,7 +56,7 @@ impl CargoPkgInfo {
             .into()
     }
 
-    /// Returns the patch version of the package.
+    /// Returns the patch version of the pacakge.
     #[allow(dead_code)]
     pub fn version_patch() -> &'static str {
         option_env!("CARGO_PKG_VERSION_PATCH")
