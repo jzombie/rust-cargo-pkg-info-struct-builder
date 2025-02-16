@@ -2,14 +2,12 @@ mod cargo_pkg_info;
 use cargo_pkg_info::CargoPkgInfo;
 
 fn main() {
-    let cargo_pkg_info = CargoPkgInfo::new();
-
     println!(
         "{:?} {:?} {:?} {:?} {:?}",
-        cargo_pkg_info.app_name(),
-        cargo_pkg_info.crate_name(),
-        cargo_pkg_info.app_version(),
-        cargo_pkg_info.build_target(),
-        cargo_pkg_info.build_time_utc(),
+        CargoPkgInfo::pkg_name(),
+        CargoPkgInfo::crate_name(),
+        CargoPkgInfo::app_version(),
+        CargoPkgInfo::build_target(),
+        CargoPkgInfo::build_time_utc(),
     );
 }

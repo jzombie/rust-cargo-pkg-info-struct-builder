@@ -6,90 +6,12 @@
 /// in the Cargo.toml file and passed during the build process.
 ///
 /// For more information, see: <https://doc.rust-lang.org/cargo/reference/environment-variables.html>
-use std::sync::Arc;
 
 const NO_ENV_FALLBACK: &str = "N/A";
 
-/// This struct provides access to package metadata set by Cargo at compile time,
-/// including versioning, authors, license information, and build details.
-pub struct CargoPkgInfo {
-    app_name: Arc<str>,
-    crate_name: Arc<str>,
-    app_version: Arc<str>,
-    version_major: Arc<str>,
-    version_minor: Arc<str>,
-    version_patch: Arc<str>,
-    version_pre: Arc<str>,
-    authors: Arc<str>,
-    description: Arc<str>,
-    homepage: Arc<str>,
-    repository: Arc<str>,
-    license: Arc<str>,
-    license_content: Arc<str>,
-    rust_version: Arc<str>,
-    readme_path: Arc<str>,
-    build_target: Arc<str>,
-    build_time_utc: Arc<Option<u64>>,
-}
+pub struct CargoPkgInfo {}
 
 impl CargoPkgInfo {
-    /// Creates a new `CargoPkgInfo` instance with values set from environment variables.
-    pub fn new() -> Self {
-        Self {
-            app_name: option_env!("CARGO_PKG_NAME")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            crate_name: option_env!("CARGO_CRATE_NAME")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            app_version: option_env!("CARGO_PKG_VERSION")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            version_major: option_env!("CARGO_PKG_VERSION_MAJOR")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            version_minor: option_env!("CARGO_PKG_VERSION_MINOR")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            version_patch: option_env!("CARGO_PKG_VERSION_PATCH")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            version_pre: option_env!("CARGO_PKG_VERSION_PRE")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            authors: option_env!("CARGO_PKG_AUTHORS")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            description: option_env!("CARGO_PKG_DESCRIPTION")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            homepage: option_env!("CARGO_PKG_HOMEPAGE")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            repository: option_env!("CARGO_PKG_REPOSITORY")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            license: option_env!("CARGO_PKG_LICENSE")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            license_content: option_env!("CARGO_PKG_LICENSE_CONTENT")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            rust_version: option_env!("CARGO_PKG_RUST_VERSION")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            readme_path: option_env!("CARGO_PKG_README")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            build_target: option_env!("BUILD_TARGET")
-                .unwrap_or(NO_ENV_FALLBACK)
-                .into(),
-            build_time_utc: Arc::new(
-                option_env!("BUILD_TIME_UTC").and_then(|s| s.parse::<u64>().ok()),
-            ),
-        }
-    }
-
     /// Returns the application name.
     ///
     /// # Example
@@ -99,8 +21,10 @@ impl CargoPkgInfo {
     /// assert!(!info.app_name().is_empty());
     /// ```
     #[allow(dead_code)]
-    pub fn app_name(&self) -> &str {
-        &self.app_name
+    pub fn pkg_name() -> &'static str {
+        option_env!("CARGO_PKG_NAME")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the crate name.
@@ -112,8 +36,10 @@ impl CargoPkgInfo {
     /// assert!(!info.crate_name().is_empty());
     /// ```
     #[allow(dead_code)]
-    pub fn crate_name(&self) -> &str {
-        &self.crate_name
+    pub fn crate_name() -> &'static str {
+        option_env!("CARGO_CRATE_NAME")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the full application version.
@@ -125,8 +51,10 @@ impl CargoPkgInfo {
     /// assert!(!info.app_version().is_empty());
     /// ```
     #[allow(dead_code)]
-    pub fn app_version(&self) -> &str {
-        &self.app_version
+    pub fn app_version() -> &'static str {
+        option_env!("CARGO_PKG_VERSION")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the major version of the application.
@@ -138,8 +66,10 @@ impl CargoPkgInfo {
     /// assert!(!info.version_major().is_empty());
     /// ```
     #[allow(dead_code)]
-    pub fn version_major(&self) -> &str {
-        &self.version_major
+    pub fn version_major() -> &'static str {
+        option_env!("CARGO_PKG_VERSION_MAJOR")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the minor version of the application.
@@ -151,8 +81,10 @@ impl CargoPkgInfo {
     /// assert!(!info.version_minor().is_empty());
     /// ```
     #[allow(dead_code)]
-    pub fn version_minor(&self) -> &str {
-        &self.version_minor
+    pub fn version_minor() -> &'static str {
+        option_env!("CARGO_PKG_VERSION_MINOR")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the patch version of the application.
@@ -164,8 +96,10 @@ impl CargoPkgInfo {
     /// assert!(!info.version_patch().is_empty());
     /// ```
     #[allow(dead_code)]
-    pub fn version_patch(&self) -> &str {
-        &self.version_patch
+    pub fn version_patch() -> &'static str {
+        option_env!("CARGO_PKG_VERSION_PATCH")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the pre-release version of the application.
@@ -177,8 +111,10 @@ impl CargoPkgInfo {
     /// assert!(info.version_pre().len() >= 0);
     /// ```
     #[allow(dead_code)]
-    pub fn version_pre(&self) -> &str {
-        &self.version_pre
+    pub fn version_pre() -> &'static str {
+        option_env!("CARGO_PKG_VERSION_PRE")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the authors of the package.
@@ -190,8 +126,10 @@ impl CargoPkgInfo {
     /// assert!(!info.authors().is_empty());
     /// ```
     #[allow(dead_code)]
-    pub fn authors(&self) -> &str {
-        &self.authors
+    pub fn authors() -> &'static str {
+        option_env!("CARGO_PKG_AUTHORS")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the description of the package.
@@ -203,8 +141,10 @@ impl CargoPkgInfo {
     /// assert!(!info.description().is_empty());
     /// ```
     #[allow(dead_code)]
-    pub fn description(&self) -> &str {
-        &self.description
+    pub fn description() -> &'static str {
+        option_env!("CARGO_PKG_DESCRIPTION")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the homepage URL of the package.
@@ -216,8 +156,10 @@ impl CargoPkgInfo {
     /// assert!(!info.homepage().is_empty());
     /// ```
     #[allow(dead_code)]
-    pub fn homepage(&self) -> &str {
-        &self.homepage
+    pub fn homepage() -> &'static str {
+        option_env!("CARGO_PKG_HOMEPAGE")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the repository URL of the package.
@@ -229,8 +171,10 @@ impl CargoPkgInfo {
     /// assert!(!info.repository().is_empty());
     /// ```
     #[allow(dead_code)]
-    pub fn repository(&self) -> &str {
-        &self.repository
+    pub fn repository() -> &'static str {
+        option_env!("CARGO_PKG_REPOSITORY")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the license type of the package.
@@ -242,8 +186,10 @@ impl CargoPkgInfo {
     /// assert!(!info.license().is_empty());
     /// ```
     #[allow(dead_code)]
-    pub fn license(&self) -> &str {
-        &self.license
+    pub fn license() -> &'static str {
+        option_env!("CARGO_PKG_LICENSE")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the contents of the license file (embedded at build time).
@@ -255,8 +201,10 @@ impl CargoPkgInfo {
     /// assert!(info.license_content().len() > 0);
     /// ```
     #[allow(dead_code)]
-    pub fn license_content(&self) -> &str {
-        &self.license_content
+    pub fn license_content() -> &'static str {
+        option_env!("CARGO_PKG_LICENSE_CONTENT")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the Rust version required by the package.
@@ -268,8 +216,10 @@ impl CargoPkgInfo {
     /// assert!(!info.rust_version().is_empty());
     /// ```
     #[allow(dead_code)]
-    pub fn rust_version(&self) -> &str {
-        &self.rust_version
+    pub fn rust_version() -> &'static str {
+        option_env!("CARGO_PKG_RUST_VERSION")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the path to the README file.
@@ -281,8 +231,10 @@ impl CargoPkgInfo {
     /// assert!(!info.readme_path().is_empty());
     /// ```
     #[allow(dead_code)]
-    pub fn readme_path(&self) -> &str {
-        &self.readme_path
+    pub fn readme_path() -> &'static str {
+        option_env!("CARGO_PKG_README")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the build target (architecture/platform).
@@ -294,8 +246,10 @@ impl CargoPkgInfo {
     /// assert!(!info.build_target().is_empty());
     /// ```
     #[allow(dead_code)]
-    pub fn build_target(&self) -> &str {
-        &self.build_target
+    pub fn build_target() -> &'static str {
+        option_env!("BUILD_TARGET")
+            .unwrap_or(NO_ENV_FALLBACK)
+            .into()
     }
 
     /// Returns the UTC build time as an `Option<u64>`.
@@ -319,7 +273,7 @@ impl CargoPkgInfo {
     /// }
     /// ```
     #[allow(dead_code)]
-    pub fn build_time_utc(&self) -> Option<u64> {
-        *self.build_time_utc
+    pub fn build_time_utc() -> Option<u64> {
+        option_env!("BUILD_TIME_UTC").and_then(|s| s.parse::<u64>().ok())
     }
 }
