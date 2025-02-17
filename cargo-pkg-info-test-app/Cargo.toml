@@ -14,7 +14,6 @@ publish = false
 
 [build-dependencies]
 cargo-pkg-info-struct-builder = { path = "../cargo-pkg-info-struct-builder" }
-string-replace-all = "0.1.1"
 
 [dependencies]
 

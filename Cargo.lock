@@ -3,15 +3,6 @@
 version = 4
 
 [[package]]
-name = "aho-corasick"
-version = "1.1.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8e60d3430d3a69478ad0993f19238d2df97c507009a52b3c10addcd7f6bcb916"
-dependencies = [
- "memchr",
-]
-
-[[package]]
 name = "bitflags"
 version = "2.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -21,6 +12,7 @@ checksum = "8f68f53c83ab957f72c32642f3868eec03eb974d1fb82e453128456482613d36"
 name = "cargo-pkg-info-struct-builder"
 version = "0.1.0-alpha7"
 dependencies = [
+ "string-auto-indent",
  "syn",
  "tempfile",
  "toml",
@@ -31,7 +23,6 @@ name = "cargo-pkg-info-test-app"
 version = "1.2.3-beta"
 dependencies = [
  "cargo-pkg-info-struct-builder",
- "string-replace-all",
 ]
 
 [[package]]
@@ -139,35 +130,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "regex"
-version = "1.11.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b544ef1b4eac5dc2db33ea63606ae9ffcfac26c1416a2806ae0bf5f56b201191"
-dependencies = [
- "aho-corasick",
- "memchr",
- "regex-automata",
- "regex-syntax",
-]
-
-[[package]]
-name = "regex-automata"
-version = "0.4.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "809e8dc61f6de73b46c85f4c96486310fe304c434cfa43669d7b40f711150908"
-dependencies = [
- "aho-corasick",
- "memchr",
- "regex-syntax",
-]
-
-[[package]]
-name = "regex-syntax"
-version = "0.8.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2b15c43186be67a4fd63bee50d0303afffcef381492ebe2c5d87f324e1b8815c"
-
-[[package]]
 name = "rustix"
 version = "0.38.44"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -210,13 +172,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "string-replace-all"
-version = "0.1.1"
+name = "string-auto-indent"
+version = "0.1.0-alpha"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6e20e8ee9321544bd46f65afcc3ec985744dd832b5897755cca169d9dac5b83a"
+checksum = "c91f4736498d7a7ad74be22702be2eedaa9b0eff207ae6c681cec81c32390ac3"
 dependencies = [
  "doc-comment",
- "regex",
 ]
 
 [[package]]

@@ -163,10 +163,14 @@ fn test_pkg_info() {
 
 #[test]
 fn test_custom_vars() {
+    // Refer to `build.rs` in `cargo-pkg-info-test-app` for the setting of these
+
     assert_eq!(option_env!("TEST_CUSTOM_ENV_VAR"), Some("TEST_RESULT"));
 
     assert_eq!(
-        option_env!("TEST_MULTI_LINE_CUSTOM_ENV_VAR"),
-        Some("\\n Some multi-line environment variable\\n Testing 1 2 3\\n")
+        CargoPkgInfo::unescape_newlines(option_env!("TEST_MULTI_LINE_CUSTOM_ENV_VAR").unwrap()),
+        CargoPkgInfo::unescape_newlines(
+            "Some multi-line environment variable\n\nLevel 1\n    Level 2\n        Level 3\n"
+        )
     );
 }

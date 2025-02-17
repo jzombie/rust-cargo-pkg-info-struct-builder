@@ -2,6 +2,7 @@ use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
+use string_auto_indent::auto_indent;
 use toml::Value;
 
 /// Injects build metadata, including license content if available.
@@ -167,7 +168,6 @@ pub fn get_license_file_path(manifest_dir: &Path) -> Option<PathBuf> {
 /// - The variable name contains invalid characters.
 /// - The variable name starts with a non-alphabetic character.
 ///
-/// # Example
 /// ```
 /// use cargo_pkg_info_struct_builder::set_cargo_env_var;
 /// set_cargo_env_var("BUILD_INFO", "Rust Build System");
@@ -187,6 +187,24 @@ pub fn set_cargo_env_var(var_name: &str, value: &str) {
 
     let formatted_value = escape_newlines(value); // Escape newlines
     println!("cargo:rustc-env={}={}", var_name, formatted_value);
+}
+
+/// Sets an environment variable for Cargo with auto-indented multi-line content.
+///
+/// This function applies `auto_indent` to normalize indentation before
+/// setting the environment variable, ensuring consistent formatting.
+///
+/// # Arguments
+/// * `var_name` - The name of the environment variable.
+/// * `value` - The multi-line string value to be auto-indented and assigned.
+///
+/// # Behavior
+/// - Ensures proper indentation is maintained when storing multi-line values.
+/// - Calls `set_cargo_env_var` after processing the string.
+pub fn set_multi_line_cargo_env_var(var_name: &str, value: &str) {
+    let auto_indented_value = auto_indent(value);
+
+    set_cargo_env_var(var_name, auto_indented_value.as_str());
 }
 
 /// Validates if an environment variable name follows Cargo and POSIX conventions.
