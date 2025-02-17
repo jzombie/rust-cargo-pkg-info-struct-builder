@@ -13,13 +13,6 @@
 
 pub struct CargoPkgInfo {}
 
-/// Unescapes all `\\n` sequences back to `\n`.
-macro_rules! unescape_newlines {
-    ($s:expr) => {
-        Box::leak($s.replace("\\n", "\n").into_boxed_str())
-    };
-}
-
 impl CargoPkgInfo {
     /// Returns the package name.
     #[allow(dead_code)]
@@ -120,7 +113,7 @@ impl CargoPkgInfo {
             return None;
         }
 
-        Some(unescape_newlines!(license.unwrap()))
+        Some(Self::unescape_newlines(license.unwrap()))
     }
 
     /// Returns the Rust version required by the package.
@@ -145,5 +138,10 @@ impl CargoPkgInfo {
     #[allow(dead_code)]
     pub fn build_time_utc() -> Option<u64> {
         option_env!("BUILD_TIME_UTC").and_then(|s| s.parse::<u64>().ok())
+    }
+
+    /// Converts `\\n` sequences back to `\n`.
+    pub fn unescape_newlines(s: &str) -> &'static str {
+        Box::leak(s.replace("\\n", "\n").into_boxed_str())
     }
 }

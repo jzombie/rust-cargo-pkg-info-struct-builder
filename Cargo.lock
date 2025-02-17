@@ -10,8 +10,9 @@ checksum = "8f68f53c83ab957f72c32642f3868eec03eb974d1fb82e453128456482613d36"
 
 [[package]]
 name = "cargo-pkg-info-struct-builder"
-version = "0.1.0-alpha7"
+version = "0.1.0-alpha8"
 dependencies = [
+ "string-auto-indent",
  "syn",
  "tempfile",
  "toml",
@@ -29,6 +30,12 @@ name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
+
+[[package]]
+name = "doc-comment"
+version = "0.3.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fea41bba32d969b513997752735605054bc0dfa92b4c56bf1189f2e174be7a10"
 
 [[package]]
 name = "equivalent"
@@ -162,6 +169,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "87607cb1398ed59d48732e575a4c28a7a8ebf2454b964fe3f224f2afc07909e1"
 dependencies = [
  "serde",
+]
+
+[[package]]
+name = "string-auto-indent"
+version = "0.1.0-alpha"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c91f4736498d7a7ad74be22702be2eedaa9b0eff207ae6c681cec81c32390ac3"
+dependencies = [
+ "doc-comment",
 ]
 
 [[package]]

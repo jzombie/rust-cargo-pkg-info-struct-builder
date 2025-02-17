@@ -12,7 +12,8 @@ readme = "README.md"
 license-file = "MOCK-LICENSE.txt"
 publish = false
 
-[dependencies]
-
 [build-dependencies]
 cargo-pkg-info-struct-builder = { path = "../cargo-pkg-info-struct-builder" }
+
+[dependencies]
+
