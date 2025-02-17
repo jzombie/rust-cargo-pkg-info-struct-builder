@@ -14,33 +14,34 @@
 | Windows-latest| [![Windows Tests][windows-latest-badge]][windows-latest-workflow]                    |
 
 
-
-
 A build-time crate that generates a struct (`CargoPkgInfo`) to provide easy, structured access to your Rust project’s compile-time Cargo environment variables.
 
 ## Available Metadata Methods
 
 Once generated, the `CargoPkgInfo` struct provides access to the following metadata:
 
-| **Method**                           | **Description**                                          |
-|--------------------------------------|----------------------------------------------------------|
-| `CargoPkgInfo::pkg_name()`           | Package name (`CARGO_PKG_NAME`)                          |
-| `CargoPkgInfo::crate_name()`         | Crate name (`CARGO_CRATE_NAME`)                          |
-| `CargoPkgInfo::pkg_version()`        | Full version (`CARGO_PKG_VERSION`)                       | 
-| `CargoPkgInfo::version_major()`      | Major version (`CARGO_PKG_VERSION_MAJOR`)                |
-| `CargoPkgInfo::version_minor()`      | Minor version (`CARGO_PKG_VERSION_MINOR`)                |
-| `CargoPkgInfo::version_patch()`      | Patch version (`CARGO_PKG_VERSION_PATCH`)                |
-| `CargoPkgInfo::version_pre()`        | Pre-release version (`CARGO_PKG_VERSION_PRE`)            |
-| `CargoPkgInfo::authors()`            | Authors (`CARGO_PKG_AUTHORS`)                            |
-| `CargoPkgInfo::description()`        | Description (`CARGO_PKG_DESCRIPTION`)                    |
-| `CargoPkgInfo::homepage()`           | Homepage URL (`CARGO_PKG_HOMEPAGE`)                      |
-| `CargoPkgInfo::repository()`         | Repository URL (`CARGO_PKG_REPOSITORY`)                  |
-| `CargoPkgInfo::license()`            | License name (`CARGO_PKG_LICENSE`)                       |
-| `CargoPkgInfo::license_content()`    | Full license text (contents of `CARGO_PKG_LICENSE_FILE`) |
-| `CargoPkgInfo::rust_version()`       | Required Rust version (`CARGO_PKG_RUST_VERSION`)         |
-| `CargoPkgInfo::readme_path()`        | Path to README file (`CARGO_PKG_README`)                 |
-| `CargoPkgInfo::build_target()`       | Compilation target (`BUILD_TARGET`)                      |
-| `CargoPkgInfo::build_time_utc()`     | Build timestamp UTC (`BUILD_TIME_UTC`)                   |
+| **Method**                              | **Description**                                          |
+|-----------------------------------------|----------------------------------------------------------|
+| `CargoPkgInfo::pkg_name()`              | Package name -> `Option<&'static str>`                   |
+| `CargoPkgInfo::crate_name()`            | Crate name -> `Option<&'static str>`                     |
+| `CargoPkgInfo::pkg_version()`           | Full version -> `Option<&'static str>`                   | 
+| `CargoPkgInfo::version_major()`         | Major version -> `Option<&'static str>`                  |
+| `CargoPkgInfo::version_major_numeric()` | Major version -> `Option<u32>`                           |
+| `CargoPkgInfo::version_minor()`         | Minor version -> `Option<&'static str>`                  |
+| `CargoPkgInfo::version_minor_numeric()` | Minor version -> `Option<u32>`                           |
+| `CargoPkgInfo::version_patch()`         | Patch version -> `Option<&'static str>`                  |
+| `CargoPkgInfo::version_patch_numeric()` | Patch version -> `Option<u32>`                           |
+| `CargoPkgInfo::version_pre()`           | Pre-release version -> `Option<&'static str>`            |
+| `CargoPkgInfo::authors()`               | Authors -> `Option<&'static str>`                        |
+| `CargoPkgInfo::description()`           | Description -> `Option<&'static str>`                    |
+| `CargoPkgInfo::homepage()`              | Homepage URL -> `Option<&'static str>`                   |
+| `CargoPkgInfo::repository()`            | Repository URL -> `Option<&'static str>`                 |
+| `CargoPkgInfo::license()`               | License name -> `Option<&'static str>`                   |
+| `CargoPkgInfo::license_content()`       | Full license text -> `Option<&'static str>`              |
+| `CargoPkgInfo::rust_version()`          | Required Rust version -> `Option<&'static str>`          |
+| `CargoPkgInfo::readme_path()`           | Path to README file -> `Option<&'static str>`            |
+| `CargoPkgInfo::build_target()`          | Compilation target -> `Option<&'static str>`             |
+| `CargoPkgInfo::build_time_utc()`        | Build timestamp UTC -> `Option<u64>`                     |
 
 ---
 
@@ -97,7 +98,7 @@ fn main() {
 }
 ```
 
-**This embeds project metadata into your binary at compile time—no runtime environment reads needed!**
+**This embeds project metadata into your binary at compile time—runtime environment variables are not used.**
 
 ## Why Compile-Time Injection?
 
@@ -118,7 +119,6 @@ When `build.rs` runs:
 This is ideal for **logging, debugging, and version tracking** in Rust applications.
 
 ## Notes
-- If an environment variable is missing, it **falls back to `"N/A"`** instead of panicking.
 - **Numeric fields** like `build_time_utc()` return `Option<u64>` instead of a string.
 - The generated file **can be committed to version control**, but it will remain **unchanged unless the template itself is modified.** Metadata updates do not change the file itself.
 
