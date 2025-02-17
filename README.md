@@ -119,8 +119,8 @@ When `build.rs` runs:
 This is ideal for **logging, debugging, and version tracking** in Rust applications.
 
 ## Notes
-- **Numeric fields** like `build_time_utc()` return `Option<u64>` instead of a string.
-- The generated file **can be committed to version control**, but it will remain **unchanged unless the template itself is modified.** Metadata updates do not change the file itself.
+
+The generated file **can be committed to version control**, but it will remain **unchanged unless the template itself is modified.** Metadata updates do not change the file itself.
 
 ## License
 Licensed under **MIT**. See [`LICENSE`][license-page] for details.
