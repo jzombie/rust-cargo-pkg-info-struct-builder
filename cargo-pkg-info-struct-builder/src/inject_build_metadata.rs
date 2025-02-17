@@ -4,14 +4,6 @@ use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
 use toml::Value;
 
-/// Escapes all newline sequences, normalizing `\r\n` to `\n`,
-/// then replacing `\n` with `\\n`.
-macro_rules! escape_newlines {
-    ($s:expr) => {
-        $s.replace("\r\n", "\n").replace('\n', "\\n")
-    };
-}
-
 /// Injects build metadata, including license content if available.
 ///
 /// This function gathers metadata such as:
@@ -97,6 +89,12 @@ pub fn inject_build_metadata(project_dest_path: PathBuf) {
     if let Some(license_path) = get_license_file_path(&manifest_dir) {
         println!("cargo:rerun-if-changed={}", license_path.display());
     }
+}
+
+/// Escapes all newline sequences, normalizing `\r\n` to `\n`,
+/// then replacing `\n` with `\\n`.
+fn escape_newlines(s: &str) -> String {
+    s.replace("\r\n", "\n").replace('\n', "\\n")
 }
 
 /// Reads `Cargo.toml`, parses it, and extracts the value of a specified field.
@@ -187,7 +185,7 @@ pub fn set_cargo_env_var(var_name: &str, value: &str) {
         var_name
     );
 
-    let formatted_value = escape_newlines!(value); // Escape newlines
+    let formatted_value = escape_newlines(value); // Escape newlines
     println!("cargo:rustc-env={}={}", var_name, formatted_value);
 }
 

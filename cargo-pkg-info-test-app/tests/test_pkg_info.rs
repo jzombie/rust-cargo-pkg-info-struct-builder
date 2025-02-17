@@ -160,3 +160,13 @@ fn test_pkg_info() {
         "Expected build time to be available, but it was None"
     );
 }
+
+#[test]
+fn test_custom_vars() {
+    assert_eq!(option_env!("TEST_CUSTOM_ENV_VAR"), Some("TEST_RESULT"));
+
+    assert_eq!(
+        option_env!("TEST_MULTI_LINE_CUSTOM_ENV_VAR"),
+        Some("\\n Some multi-line environment variable\\n Testing 1 2 3\\n")
+    );
+}
