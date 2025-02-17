@@ -53,7 +53,7 @@ pub fn inject_build_metadata(project_dest_path: PathBuf) {
 
     // Retrieve the build target
     let build_target = env::var("TARGET").unwrap_or_else(|_| "unknown-target".to_string());
-    println!("cargo:rustc-env=BUILD_TARGET={}", build_target);
+    set_cargo_env_var("BUILD_TARGET", &build_target);
 
     // Get the build time in UTC
     let build_time_utc = SystemTime::now()
@@ -61,16 +61,12 @@ pub fn inject_build_metadata(project_dest_path: PathBuf) {
         .expect("Time went backwards")
         .as_secs()
         .to_string();
-    println!("cargo:rustc-env=BUILD_TIME_UTC={}", build_time_utc);
+    set_cargo_env_var("BUILD_TIME_UTC", &build_time_utc);
 
     // Read and set the license content if available
     if let Some(license_path) = get_license_file_path(&manifest_dir) {
         if let Ok(license_content) = fs::read_to_string(&license_path) {
-            // Set license content as an environment variable
-            println!(
-                "cargo:rustc-env=LICENSE_CONTENT={}",
-                escape_newlines!(license_content)
-            );
+            set_cargo_env_var("LICENSE_CONTENT", &license_content);
         }
     }
 
@@ -159,4 +155,59 @@ pub fn get_cargo_field(manifest_dir: &Path, field: &str) -> Option<String> {
 /// - If `Cargo.toml` uses unconventional formatting, it might not be detected.
 pub fn get_license_file_path(manifest_dir: &Path) -> Option<PathBuf> {
     get_cargo_field(manifest_dir, "license-file").map(|rel_path| manifest_dir.join(rel_path))
+}
+
+/// Sets an environment variable for Cargo at build time, ensuring the variable name is valid.
+///
+/// # Arguments
+/// * `var_name` - The name of the environment variable (validated).
+/// * `value` - The value to assign, with escaped newlines.
+///
+/// # Panics
+/// This function will panic if:
+/// - The variable name is empty.
+/// - The variable name contains invalid characters.
+/// - The variable name starts with a non-alphabetic character.
+///
+/// # Example
+/// ```
+/// use cargo_pkg_info_struct_builder::set_cargo_env_var;
+/// set_cargo_env_var("BUILD_INFO", "Rust Build System");
+/// ```
+pub fn set_cargo_env_var(var_name: &str, value: &str) {
+    assert!(
+        is_valid_env_var_name(var_name),
+        "Invalid Cargo environment variable name: '{}'",
+        var_name
+    );
+
+    assert!(
+        !var_name.starts_with("CARGO_"),
+        "Environment variable name '{}' is reserved (cannot start with 'CARGO_')",
+        var_name
+    );
+
+    let formatted_value = escape_newlines!(value); // Escape newlines
+    println!("cargo:rustc-env={}={}", var_name, formatted_value);
+}
+
+/// Validates if an environment variable name follows Cargo and POSIX conventions.
+///
+/// - Must start with an ASCII letter (`A-Z` or `a-z`).
+/// - Can contain uppercase letters (`A-Z`), digits (`0-9`), and underscores (`_`).
+/// - Cannot contain spaces, special characters, or start with a digit.
+///
+/// # Returns
+/// `true` if the name is valid, `false` otherwise.
+fn is_valid_env_var_name(name: &str) -> bool {
+    let mut chars = name.chars();
+
+    // First character must be a letter (A-Z or a-z)
+    match chars.next() {
+        Some(c) if c.is_ascii_alphabetic() => (),
+        _ => return false,
+    }
+
+    // Remaining characters must be A-Z, 0-9, or _
+    chars.all(|c| c.is_ascii_uppercase() || c.is_ascii_digit() || c == '_')
 }
