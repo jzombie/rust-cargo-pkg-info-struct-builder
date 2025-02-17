@@ -94,6 +94,8 @@ pub fn inject_build_metadata(project_dest_path: PathBuf) {
 
 /// Escapes all newline sequences, normalizing `\r\n` to `\n`,
 /// then replacing `\n` with `\\n`.
+///
+/// Note: At this time this is intentionally normalized to Unix-style line endings.
 fn escape_newlines(s: &str) -> String {
     s.replace("\r\n", "\n").replace('\n', "\\n")
 }

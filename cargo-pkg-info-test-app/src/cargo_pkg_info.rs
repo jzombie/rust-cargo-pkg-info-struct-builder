@@ -141,6 +141,8 @@ impl CargoPkgInfo {
     }
 
     /// Converts `\\n` sequences back to `\n`.
+    ///
+    /// Note: At this time this is intentionally normalized to Unix-style line endings.
     pub fn unescape_newlines(s: &str) -> &'static str {
         Box::leak(s.replace("\\n", "\n").into_boxed_str())
     }
