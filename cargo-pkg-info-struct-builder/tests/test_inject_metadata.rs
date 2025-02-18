@@ -1,6 +1,5 @@
 use cargo_pkg_info_struct_builder::inject_build_metadata;
 use std::fs;
-use syn;
 
 // Note: Additional tests are performed directly in the `cargo-pkg-info-test-app` workspace.
 

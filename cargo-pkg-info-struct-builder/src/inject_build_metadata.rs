@@ -42,7 +42,7 @@ pub fn inject_build_metadata(project_dest_path: PathBuf) {
     let destination_dir = dest_path.parent().unwrap();
 
     // Ensure the generated directory exists
-    fs::create_dir_all(&destination_dir).expect("Failed to create generated directory");
+    fs::create_dir_all(destination_dir).expect("Failed to create generated directory");
 
     // Retrieve the build target
     let build_target = env::var("TARGET").unwrap_or_else(|_| "unknown-target".to_string());
