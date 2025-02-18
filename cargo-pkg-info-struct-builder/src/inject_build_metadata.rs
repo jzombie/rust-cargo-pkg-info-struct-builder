@@ -5,6 +5,21 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use string_auto_indent::auto_indent;
 use toml::Value;
 
+/// Macro to escape newlines by normalizing `\r\n` to `\n`,
+/// then replacing `\n` with `\\n` for environment variable compatibility.
+///
+/// This ensures multi-line values stored in environment variables are
+/// correctly formatted when used in Cargo build scripts.
+///
+/// Note: For simplicity this is intentionally normalized to Unix-style
+/// line endings, though testing is performed cross-platform.
+#[macro_export]
+macro_rules! escape_newlines {
+    ($s:expr) => {
+        $s.replace("\r\n", "\n").replace('\n', "\\n")
+    };
+}
+
 /// Injects build metadata, including license content if available.
 ///
 /// This function gathers metadata such as:
@@ -90,14 +105,6 @@ pub fn inject_build_metadata(project_dest_path: PathBuf) {
     if let Some(license_path) = get_license_file_path(&manifest_dir) {
         println!("cargo:rerun-if-changed={}", license_path.display());
     }
-}
-
-/// Escapes all newline sequences, normalizing `\r\n` to `\n`,
-/// then replacing `\n` with `\\n`.
-///
-/// Note: At this time this is intentionally normalized to Unix-style line endings.
-fn escape_newlines(s: &str) -> String {
-    s.replace("\r\n", "\n").replace('\n', "\\n")
 }
 
 /// Reads `Cargo.toml`, parses it, and extracts the value of a specified field.
@@ -187,7 +194,7 @@ pub fn set_cargo_env_var(var_name: &str, value: &str) {
         var_name
     );
 
-    let formatted_value = escape_newlines(value); // Escape newlines
+    let formatted_value = escape_newlines!(value); // Escape newlines
     println!("cargo:rustc-env={}={}", var_name, formatted_value);
 }
 

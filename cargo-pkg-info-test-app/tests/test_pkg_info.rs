@@ -170,11 +170,11 @@ fn test_custom_vars() {
     assert_eq!(
         CargoPkgInfo::split_multi_line_custom_var(option_env!("TEST_MULTI_LINE_CUSTOM_ENV_VAR")),
         Some(vec![
-            "Some multi-line environment variable",
-            "",
-            "Level 1",
-            "    Level 2",
-            "        Level 3",
+            "Some multi-line environment variable".to_string(),
+            "".to_string(),
+            "Level 1".to_string(),
+            "    Level 2".to_string(),
+            "        Level 3".to_string(),
         ])
     );
 }

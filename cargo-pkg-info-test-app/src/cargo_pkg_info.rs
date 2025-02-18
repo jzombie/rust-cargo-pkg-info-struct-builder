@@ -15,6 +15,20 @@
 
 pub struct CargoPkgInfo {}
 
+/// Macro to convert escaped `\\n` sequences back into actual newline characters (`\n`).
+///
+/// This ensures environment variables or serialized data containing escaped
+/// newlines are correctly interpreted as multi-line text.
+///
+/// Note: For simplicity this is intentionally normalized to Unix-style
+/// line endings, though testing is performed cross-platform.
+#[macro_export]
+macro_rules! unescape_newlines {
+    ($s:expr) => {
+        $s.replace("\\n", "\n")
+    };
+}
+
 impl CargoPkgInfo {
     /// Returns the package name.
     #[allow(dead_code)]
@@ -192,12 +206,10 @@ impl CargoPkgInfo {
     /// * `None` if the environment variable is not set.
     /// ```
     #[allow(dead_code)]
-    pub fn split_multi_line_custom_var(
-        env_data: Option<&'static str>,
-    ) -> Option<Vec<&'static str>> {
+    pub fn split_multi_line_custom_var(env_data: Option<&'static str>) -> Option<Vec<String>> {
         env_data.map(|data| {
-            let unescaped = Self::unescape_newlines(data);
-            unescaped.lines().collect()
+            let unescaped = unescape_newlines!(data); // Macro expands into a String
+            unescaped.lines().map(String::from).collect() // Convert each line into an owned String
         })
     }
 }
