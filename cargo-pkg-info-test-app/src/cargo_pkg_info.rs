@@ -8,7 +8,9 @@
 // information, and build details. The values are obtained from environment
 // variables defined in the Cargo.toml file and passed during the build process.
 //
-// For more information, see: <https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-crates>
+// For more information, see:
+// - Cargo Environment Variables: <https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-crates>
+// - Repository: <https://github.com/jzombie/rust-cargo-pkg-info-struct-builder>
 //------------------------------------------------------------------------------
 
 pub struct CargoPkgInfo {}
