@@ -133,8 +133,6 @@ pub fn get_cargo_field(manifest_dir: &Path, field: &str) -> Option<String> {
         .map(|s| s.to_string())
 }
 
-/// Retrieves the absolute path of the `license-file` from `Cargo.toml`, if available.
-
 /// Reads `Cargo.toml`, extracts the `license-file` path, and returns it.
 ///
 /// This function looks for the `license-file` key in `Cargo.toml` and extracts
