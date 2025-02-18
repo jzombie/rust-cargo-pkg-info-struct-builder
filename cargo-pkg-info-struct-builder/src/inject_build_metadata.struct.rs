@@ -125,9 +125,8 @@ impl CargoPkgInfo {
     pub fn license_content() -> Option<&'static str> {
         let license = option_env!("LICENSE_CONTENT");
 
-        if license.is_none() {
-            return None;
-        }
+        // Return immediately if no license
+        license?;
 
         Some(Self::unescape_newlines(license.unwrap()))
     }
