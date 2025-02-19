@@ -215,7 +215,23 @@ impl BuildUtils {
         Self::set_cargo_env_var(var_name, auto_indented_value.as_str());
     }
 
-    // TODO: Document
+    /// Sets an environment variable for Cargo with the content of a file, preserving multi-line formatting.
+    ///
+    /// This function reads a file's content and assigns it to a Cargo environment variable.
+    /// It ensures that multi-line content is stored correctly for later retrieval.
+    ///
+    /// # Arguments
+    /// * `var_name` - The name of the environment variable.
+    /// * `file_path` - The path to the file containing the multi-line content.
+    ///
+    /// # Behavior
+    /// - Reads the file specified by `file_path`.
+    /// - Stores its content as an environment variable for use in Cargo builds.
+    /// - Calls `set_cargo_env_var` after reading the file.
+    ///
+    /// # Panics
+    /// This function will panic if:
+    /// - The file at `file_path` cannot be read.
     pub fn set_multi_line_cargo_env_var_from_file(var_name: &str, file_path: &Path) {
         let file_content = fs::read_to_string(file_path)
             .unwrap_or_else(|_| panic!("Could not read file at path: {:?}", file_path));

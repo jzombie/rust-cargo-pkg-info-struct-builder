@@ -23,7 +23,7 @@ pub fn set_multi_line_cargo_env_var(var_name: &str, value: &str) {
     BuildUtils::set_multi_line_cargo_env_var(var_name, value)
 }
 
-/// TODO: Finish documenting
+/// Sets an environment variable for Cargo with the content of a file, preserving multi-line formatting.
 ///
 /// See [`BuildUtils::set_multi_line_cargo_env_var_from_file`] for full documentation.
 pub fn set_multi_line_cargo_env_var_from_file(var_name: &str, file_path: &Path) {
