@@ -16,5 +16,5 @@ fn main() {
         "#,
     );
 
-    inject_build_metadata(Path::new("src").join("cargo_pkg_info.rs").to_path_buf());
+    inject_build_metadata(&Path::new("src").join("cargo_pkg_info.rs"));
 }

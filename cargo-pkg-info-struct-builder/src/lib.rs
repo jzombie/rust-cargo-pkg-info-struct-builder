@@ -1,11 +1,11 @@
 pub mod build_utils;
 pub use build_utils::BuildUtils;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 /// Proxies [`BuildUtils::inject_build_metadata`]. See its documentation for details.
 ///
 /// See [`BuildUtils::inject_build_metadata`] for full documentation.
-pub fn inject_build_metadata(project_dest_path: PathBuf) {
+pub fn inject_build_metadata(project_dest_path: &Path) {
     BuildUtils::inject_build_metadata(project_dest_path)
 }
 

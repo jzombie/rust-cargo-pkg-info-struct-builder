@@ -36,7 +36,7 @@ impl BuildUtils {
     ///
     /// # Arguments
     ///
-    /// * `project_dest_path` - A `PathBuf` representing the relative path to the target file.
+    /// * `project_dest_path` - A `Path` representing the relative path to the target file.
     ///   This file is where the build metadata will be injected.
     ///
     /// # Behavior
@@ -51,7 +51,7 @@ impl BuildUtils {
     /// - The destination directory cannot be created.
     /// - The file cannot be written.
     /// - The parent directory of the file cannot be determined.
-    pub fn inject_build_metadata(project_dest_path: PathBuf) {
+    pub fn inject_build_metadata(project_dest_path: &Path) {
         // Retrieve the manifest directory
         let manifest_dir =
             PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR not set"));

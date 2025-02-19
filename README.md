@@ -77,7 +77,7 @@ fn main() {
     // You can change the path of your choosing, and directories are
     // auto-generated if they do not already exist.
     let dest_path = Path::new("src").join("cargo_pkg_info.rs");
-    inject_build_metadata(dest_path.to_path_buf());
+    inject_build_metadata(&dest_path);
 }
 ```
 
