@@ -74,12 +74,8 @@ impl BuildUtils {
             .to_string();
         Self::set_cargo_env_var("BUILD_TIME_UTC", &build_time_utc);
 
-        // TODO: Read multi-line, and wrap extract functionality for path read
-        // Read and set the license content if available
         if let Some(license_path) = Self::get_license_file_path(&manifest_dir) {
-            if let Ok(license_content) = fs::read_to_string(&license_path) {
-                Self::set_cargo_env_var("LICENSE_CONTENT", &license_content);
-            }
+            Self::set_multi_line_cargo_env_var_from_file("LICENSE_CONTENT", &license_path);
         }
 
         // Embed inject.rs as bytes at compile time
@@ -217,6 +213,14 @@ impl BuildUtils {
         let auto_indented_value = auto_indent(value);
 
         Self::set_cargo_env_var(var_name, auto_indented_value.as_str());
+    }
+
+    // TODO: Document
+    pub fn set_multi_line_cargo_env_var_from_file(var_name: &str, file_path: &Path) {
+        let file_content = fs::read_to_string(file_path)
+            .unwrap_or_else(|_| panic!("Could not read file at path: {:?}", file_path));
+
+        Self::set_cargo_env_var(var_name, file_content.as_str());
     }
 
     /// Validates if an environment variable name follows Cargo and POSIX conventions.
