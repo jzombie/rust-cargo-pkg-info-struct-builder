@@ -1,6 +1,5 @@
 use cargo_pkg_info_struct_builder::{
-    inject_build_metadata::{inject_build_metadata, set_multi_line_cargo_env_var},
-    set_cargo_env_var,
+    inject_build_metadata, set_cargo_env_var, set_multi_line_cargo_env_var,
 };
 use std::path::Path;
 
