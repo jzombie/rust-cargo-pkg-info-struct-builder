@@ -203,7 +203,6 @@ impl CargoPkgInfo {
     ///
     /// * `Some(Vec<&'static str>)` if the environment variable exists and contains multiple lines.
     /// * `None` if the environment variable is not set.
-    /// ```
     #[allow(dead_code)]
     pub fn split_multi_line_custom_var(env_data: Option<&'static str>) -> Option<Vec<String>> {
         env_data.map(|data| {
