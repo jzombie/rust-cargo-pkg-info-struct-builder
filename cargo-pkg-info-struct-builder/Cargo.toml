@@ -8,7 +8,7 @@ repository = "https://github.com/jzombie/rust-cargo-pkg-info-struct-builder"
 license = "MIT"
 
 [dependencies]
-string-auto-indent = "0.1.0-alpha"
+string-auto-indent = "0.1.0"
 toml = "0.8.20"
 
 [dev-dependencies]
