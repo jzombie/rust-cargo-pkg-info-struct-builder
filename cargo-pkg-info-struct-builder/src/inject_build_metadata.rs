@@ -1,3 +1,5 @@
+// TODO: Migrate to `build_utils` struct
+
 use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -71,6 +73,7 @@ pub fn inject_build_metadata(project_dest_path: PathBuf) {
         .to_string();
     set_cargo_env_var("BUILD_TIME_UTC", &build_time_utc);
 
+    // TODO: Read multi-line, and wrap extract functionality for path read
     // Read and set the license content if available
     if let Some(license_path) = get_license_file_path(&manifest_dir) {
         if let Ok(license_content) = fs::read_to_string(&license_path) {
