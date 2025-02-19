@@ -9,7 +9,7 @@ fn test_inject_build_metadata() {
     let dest_path = temp_dir.path().join("cargo_pkg_info.rs");
 
     // Run metadata injection
-    inject_build_metadata(dest_path.to_path_buf());
+    inject_build_metadata(&dest_path);
 
     // Ensure the file is created
     assert!(dest_path.exists(), "cargo_pkg_info.rs should be created");
@@ -39,7 +39,7 @@ fn test_inject_build_metadata_no_mtime_change() {
     let dest_path = temp_dir.path().join("cargo_pkg_info.rs");
 
     // First injection
-    inject_build_metadata(dest_path.to_path_buf());
+    inject_build_metadata(&dest_path);
     let first_metadata = fs::metadata(&dest_path).unwrap();
     let first_modified = first_metadata.modified().unwrap();
 
@@ -47,7 +47,7 @@ fn test_inject_build_metadata_no_mtime_change() {
     thread::sleep(Duration::from_secs(1));
 
     // Second injection (no changes expected)
-    inject_build_metadata(dest_path.to_path_buf());
+    inject_build_metadata(&dest_path);
     let second_metadata = fs::metadata(&dest_path).unwrap();
     let second_modified = second_metadata.modified().unwrap();
 
