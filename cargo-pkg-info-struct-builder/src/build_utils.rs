@@ -121,7 +121,7 @@ impl BuildUtils {
     ///
     /// * `Some(String)` - The extracted value if found.
     /// * `None` - If the key does not exist.
-    pub fn get_cargo_field(manifest_dir: &Path, field: &str) -> Option<String> {
+    fn get_cargo_field(manifest_dir: &Path, field: &str) -> Option<String> {
         let cargo_toml_path = manifest_dir.join("Cargo.toml");
         let cargo_toml_content = fs::read_to_string(&cargo_toml_path).ok()?;
         let cargo_toml: Value = toml::from_str(&cargo_toml_content).ok()?;
@@ -159,7 +159,7 @@ impl BuildUtils {
     /// - This function does **not** verify whether the license file exists.
     /// - It does **not** parse TOML properly; it just scans lines for the `license-file` key.
     /// - If `Cargo.toml` uses unconventional formatting, it might not be detected.
-    pub fn get_license_file_path(manifest_dir: &Path) -> Option<PathBuf> {
+    fn get_license_file_path(manifest_dir: &Path) -> Option<PathBuf> {
         Self::get_cargo_field(manifest_dir, "license-file")
             .map(|rel_path| manifest_dir.join(rel_path))
     }
