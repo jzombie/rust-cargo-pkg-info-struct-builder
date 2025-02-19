@@ -1,6 +1,6 @@
 pub mod build_utils;
 pub use build_utils::BuildUtils;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 /// Proxies [`BuildUtils::inject_build_metadata`]. See its documentation for details.
 ///
@@ -20,5 +20,12 @@ pub fn set_cargo_env_var(var_name: &str, value: &str) {
 ///
 /// See [`BuildUtils::set_multi_line_cargo_env_var`] for full documentation.
 pub fn set_multi_line_cargo_env_var(var_name: &str, value: &str) {
-    BuildUtils::set_multi_line_cargo_env_var(var_name, value);
+    BuildUtils::set_multi_line_cargo_env_var(var_name, value)
+}
+
+/// TODO: Finish documenting
+///
+/// See [`BuildUtils::set_multi_line_cargo_env_var_from_file`] for full documentation.
+pub fn set_multi_line_cargo_env_var_from_file(var_name: &str, file_path: &Path) {
+    BuildUtils::set_multi_line_cargo_env_var_from_file(var_name, file_path)
 }
