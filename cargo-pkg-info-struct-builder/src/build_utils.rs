@@ -56,7 +56,7 @@ impl BuildUtils {
         let manifest_dir =
             PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR not set"));
 
-        let dest_path = manifest_dir.join(&project_dest_path);
+        let dest_path = manifest_dir.join(project_dest_path);
         let destination_dir = dest_path.parent().unwrap();
 
         // Ensure the generated directory exists
